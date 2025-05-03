@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ./url-shortener-frontend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+    networks:
+      - url-shortener-network
+#    command: [ "npm", "run", "dev" ]
+
+  backend:
+    build:
+      context: ./url-shortener-backend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    networks:
+      - url-shortener-network
+    command: [ "npm", "run", "dev" ]
+networks:
+  url-shortener-network:
+    driver: bridge
